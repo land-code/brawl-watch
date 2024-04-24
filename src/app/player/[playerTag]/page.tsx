@@ -35,11 +35,11 @@ export default async function Player({ params: { playerTag } }: IPlayerProps) {
           <span className='pt-2 text-zinc-200'>Trofeos máximos</span>{' '}
           <span>{highestTrophies}</span>
         </p>
-        <p className='flex w-max flex-col items-center rounded-xl border-2 border-zinc-400 p-4'>
+        {/* <p className='flex w-max flex-col items-center rounded-xl border-2 border-zinc-400 p-4'>
           <ClockIcon className='size-12' />{' '}
           <span className='pt-2 text-zinc-200'>Horas de juego</span>{' '}
           <span>{totalHours}</span>
-        </p>
+        </p> */}
       </div>
     </div>
   )
