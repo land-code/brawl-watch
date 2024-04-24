@@ -1,5 +1,3 @@
-// import { getPlayer } from '@/actions'
-import { redirect } from 'next/navigation'
 import SubmitButton from './ui/submit-button'
 import { getPlayer } from '@/actions'
 
