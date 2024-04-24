@@ -1,9 +1,13 @@
-import { Client } from 'brawlstars'
+'use server'
+import { APIError, Client } from 'brawlstars'
 import { redirect } from 'next/navigation'
 import { z } from 'zod'
+import { TPlayerFinderStatus } from './components/player-finder-form'
 
-export async function getPlayer(formData: FormData) {
-  'use server'
+export async function getPlayer(
+  prevState: TPlayerFinderStatus,
+  formData: FormData
+): Promise<TPlayerFinderStatus> {
   let playerTag: string | null = null
   try {
     const rawTag = formData.get('player-tag') as string
@@ -14,17 +18,17 @@ export async function getPlayer(formData: FormData) {
     playerTag = player.tag.slice(1)
   } catch (error) {
     if (error instanceof z.ZodError) {
-      // 400 Bad Request
-      console.error(error.errors)
-      return new Response('Bad Request', { status: 400 })
+      return {
+        status: 'error',
+        error: 'El formato de la etiqueta de jugador es incorrecto'
+      }
     }
-    // 500 Internal Server Error
-    console.error(error)
-    return new Response('Internal Server Error', { status: 500 })
+    if (error instanceof APIError && error.status === 404) {
+      return { status: 'error', error: 'Jugador no encontrado' }
+    }
+    return { status: 'error', error: 'Error desconocido' }
   }
 
-  if (playerTag === null) {
-    return new Response('Player not found', { status: 404 })
-  }
+  console.log('playerTag', playerTag)
   return redirect(`/player/${playerTag}`)
 }
