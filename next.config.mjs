@@ -2,6 +2,13 @@
 const nextConfig = {
   experimental: {
     typedRoutes: true
+  },
+  images: {
+    remotePatterns: [
+      {
+        hostname: 'cdn-old.brawlify.com'
+      }
+    ]
   }
 }
 
