@@ -6,6 +6,7 @@ import TotalHours, { TotalHoursSkeleton } from '@/components/total-hours'
 import StatCard, { StatCardSkeleton } from '@/components/stat-card'
 import PlayerIcon, { PlayerIconSkeleton } from '@/components/player-icon'
 import { Suspense } from 'react'
+import BattlesChart from '@/components/BattlesChart'
 
 interface IPlayerProps {
   params: {
@@ -17,11 +18,6 @@ export default async function Player({ params: { playerTag } }: IPlayerProps) {
   const client = new Client(process.env.BRAWL_STARS_API_KEY!)
   const player = await client.getPlayer(playerTag)
   const { name, trophies, highestTrophies } = player
-
-  // The type assertion is necessary because the typings provided by the library are incorrect
-  const battleLog = (await client.getPlayerBattlelog(playerTag)) as unknown as {
-    items: PlayerBattlelog[]
-  }
 
   return (
     <div className='flex flex-col items-center gap-4 py-4'>
@@ -37,9 +33,10 @@ export default async function Player({ params: { playerTag } }: IPlayerProps) {
           value={highestTrophies}
         />
         <Suspense fallback={<TotalHoursSkeleton />}>
-          <TotalHours battleLogItems={battleLog.items} />
+          <TotalHours playerTag={playerTag} />
         </Suspense>
       </div>
+      <BattlesChart playerTag={playerTag} />
     </div>
   )
 }
