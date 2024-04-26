@@ -2,9 +2,10 @@ import { TrophyIcon } from '@/icons/trophy-icon'
 import { Client, PlayerBattlelog } from 'brawlstars'
 
 import { RewardIcon } from '@/icons/reward-icon'
-import TotalHours from '@/components/total-hours'
-import StatCard from '@/components/StatCard'
-import PlayerIcon from '@/components/PlayerIcon'
+import TotalHours, { TotalHoursSkeleton } from '@/components/total-hours'
+import StatCard, { StatCardSkeleton } from '@/components/stat-card'
+import PlayerIcon, { PlayerIconSkeleton } from '@/components/player-icon'
+import { Suspense } from 'react'
 
 interface IPlayerProps {
   params: {
@@ -24,7 +25,9 @@ export default async function Player({ params: { playerTag } }: IPlayerProps) {
 
   return (
     <div className='flex flex-col items-center gap-4 py-4'>
-      <PlayerIcon iconId={player.icon.id} />
+      <Suspense fallback={<PlayerIconSkeleton />}>
+        <PlayerIcon iconId={player.icon.id} />
+      </Suspense>
       <h1 className='text-2xl'>{name}</h1>
       <div className='flex flex-wrap gap-4'>
         <StatCard icon={TrophyIcon} label='Trofeos actuales' value={trophies} />
@@ -33,7 +36,9 @@ export default async function Player({ params: { playerTag } }: IPlayerProps) {
           label='Trofeos máximos'
           value={highestTrophies}
         />
-        <TotalHours battleLogItems={battleLog.items} />
+        <Suspense fallback={<TotalHoursSkeleton />}>
+          <TotalHours battleLogItems={battleLog.items} />
+        </Suspense>
       </div>
     </div>
   )

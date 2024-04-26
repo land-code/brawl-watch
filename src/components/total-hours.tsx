@@ -1,11 +1,19 @@
 import ClockIcon from '@/icons/clock-icon'
 import { PlayerBattlelog } from 'brawlstars'
-import StatCard from './StatCard'
+import StatCard, { StatCardSkeleton } from './stat-card'
+import { sleep } from '@/utils'
 
 interface ITotalHoursProps {
   battleLogItems: PlayerBattlelog[]
 }
-export default function TotalHours({ battleLogItems }: ITotalHoursProps) {
+
+export function TotalHoursSkeleton () {
+  return (
+    <StatCardSkeleton icon={ClockIcon} label='Horas de juego' />
+  )
+}
+
+export default async function TotalHours({ battleLogItems }: ITotalHoursProps) {
   const totalHours = battleLogItems
     .map(b => {
       const { battle } = b as { battle: unknown }
