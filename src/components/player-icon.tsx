@@ -1,5 +1,4 @@
 import { API } from '@/api'
-import { sleep } from '@/utils'
 import Image from 'next/image'
 
 interface IPlayerIconProps {

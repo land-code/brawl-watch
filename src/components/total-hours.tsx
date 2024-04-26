@@ -1,7 +1,6 @@
 import ClockIcon from '@/icons/clock-icon'
 import { PlayerBattlelog } from 'brawlstars'
 import StatCard, { StatCardSkeleton } from './stat-card'
-import { sleep } from '@/utils'
 
 interface ITotalHoursProps {
   battleLogItems: PlayerBattlelog[]
